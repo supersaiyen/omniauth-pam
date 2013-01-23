@@ -3,13 +3,14 @@ module OmniAuth
     class PAM
       include OmniAuth::Strategy
 
+      option :title, "Cardinal Gitlab Login"
       option :fields, [:username]
       option :uid_field, :username
 
       def request_phase
         OmniAuth::Form.build(
           :title => (options[:title] || "Authenticate"), 
-          :url => callback_path
+          :url => "/gitlab"+callback_path
         ) do |field|
           field.text_field 'Username', 'username'
           field.password_field 'Password', 'password'
